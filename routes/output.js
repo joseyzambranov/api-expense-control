@@ -49,12 +49,22 @@ try{
 
 //DELETE
 
-router.delete("/:id",verifyToken,(req,res)=>{
+/*router.delete("/:id",verifyToken,(req,res)=>{
     Output.findByIdAndDelete(req.params.id,(err,text)=>{
         if(err) return res.status(500).json(err)
 
         res.status(200).json("Output has been deleted....")
     })
+})*/
+router.delete("/:id",verifyToken,async(req,res)=>{
+    try{
+
+        await Output.findByIdAndDelete(req.params.id)
+        res.status(200).json("Output has been deleted...")
+
+    }catch(err){
+        res.status(500).json(err)
+    }
 })
 
 //GET USER OUTPUT
