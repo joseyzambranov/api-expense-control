@@ -4,6 +4,7 @@ const UserSchema = new mongoose.Schema({
     email:{type:String,required:true,unique:true},
     password:{type:String,required:true},
     img:{type:String},
+    tokenResetPassword:{type:String},
 },
 {timestamps:true}
 )

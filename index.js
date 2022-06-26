@@ -9,6 +9,7 @@ const authRouter = require("./routes/auth")
 const inputRouter = require("./routes/input")
 const outputRouter = require("./routes/output")
 const inputPlanRouter = require("./routes/inputPlan")
+const forgotpasswordRouter = require("./routes/forgotPasswordControler")
 
 mongoose.connect(process.env.MONGO_CONECT)
 .then(()=>console.log("DB connection Successfull"))
@@ -20,6 +21,7 @@ app.use("/api/auth",authRouter)
 app.use("/api/input",inputRouter)
 app.use("/api/output",outputRouter)
 app.use("/api/inputPlan",inputPlanRouter)
+app.use("/api/forgotpassword",forgotpasswordRouter)
 
 app.listen(port,()=>{
     console.log("API Server expense control running")
