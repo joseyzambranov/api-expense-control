@@ -24,7 +24,29 @@ router.post("/register", (req,res)=>{
 //LOGIN 
 
 router.post("/login", async (req,res)=>{
-try{
+
+    if(req.body.email===""){
+        res.status(400).send("email required")
+    }
+    console.error(req.body.email);
+
+    User.findOne({
+        email:req.body.email
+    }).then((user)=>{
+        if(!user){
+            console.error("email not in database");
+            res.status(403).send("email not in db")
+        }else if(Crypto.AES.decrypt(user.password,process.env.PASS_SEC).toString(Crypto.enc.Utf8)!== req.body.password){
+            res.status(401).json("Wrong credentiials!")
+        }else{
+            const accessToken=jwt.sign({id:user._id},process.env.JWT_SEC,{expiresIn:"3d"})
+            const {password,...others}=user._doc
+             res.status(200).json({others,accessToken})
+            
+        }
+
+})
+/*try{
 
     const user = await User.findOne({email:req.body.email})
     !user && res.status(401).json("Wrong credentials!")
@@ -36,7 +58,7 @@ try{
     res.status(200).json({others,accessToken})
 }catch(err){
     res.status(500).json(err)
-}
+}*/
 
 
 })
