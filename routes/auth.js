@@ -39,7 +39,7 @@ router.post("/login", async (req,res)=>{
         }else if(Crypto.AES.decrypt(user.password,process.env.PASS_SEC).toString(Crypto.enc.Utf8)!== req.body.password){
             res.status(401).json("Wrong credentiials!")
         }else{
-            const accessToken=jwt.sign({id:user._id},process.env.JWT_SEC,{expiresIn:"3d"})
+            const accessToken=jwt.sign({id:user._id},process.env.JWT_SEC,{})
             const {password,...others}=user._doc
              res.status(200).json({others,accessToken})
             
